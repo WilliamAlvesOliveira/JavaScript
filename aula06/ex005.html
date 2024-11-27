@@ -23,8 +23,13 @@
         var p1 = window.document.getElementsByTagName('p')[1]
         mensagem = window.document.getElementById('msg')//pega pelo id
         document.write(p1.innerText+'<br>')//pega o texto
-        document.write(p1.innerHTML)//pega o html com as tags filhas
+        document.write(p1.innerHTML + '<br>')//pega o html com as tags filhas
         mensagem.style.background = 'green'
+        document.body.style.background = 'black'
+        var ntitulo = window.document.getElementById('titulo')
+        ntitulo.innerText = ntitulo.innerText.replace('estudos', 'teste')
+        document.write(ntitulo.innerText + '<br>')
+        window.document.getElementById('msg').innerHTML = "<a href='https://williamalvesoliveira.github.io/website/'>Clique aqui caramba</a>";
     </script>
     
 </body>
