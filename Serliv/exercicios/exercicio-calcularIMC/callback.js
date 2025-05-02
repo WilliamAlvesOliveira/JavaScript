@@ -7,12 +7,12 @@ entradas:
 */
 
 
-function calcularIMC(peso, altura, action){
+function calcularIMC(peso, altura, callback){
     if (typeof peso !== 'number' || typeof altura !== 'number'){ return 0 }
     console.log(peso, altura)
     let IMC = peso / (altura**2)
-    if (typeof action === "function"){
-        return action(IMC)
+    if (typeof callback === "function"){
+        return callback(IMC)
     }
     return IMC
 }
@@ -33,3 +33,4 @@ console.log(calcularIMC(60, 1.64))
 console.log(calcularIMC(60, 1.64, classificarIMC))
 //chamada da função classificarimc diretamente
 console.log(classificarIMC(35))
+

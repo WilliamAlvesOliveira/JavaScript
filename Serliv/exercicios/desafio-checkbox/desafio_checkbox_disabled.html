@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Curso Javascript Completo 2018</title>
+    <meta charset="utf-8">
+
+</head>
+
+<body>
+    <h1 id="title1">Curso Javascript Completo</h1>
+
+    <main class="cmain" id="idmain">
+        <h2>subtitulo</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
+    </main>
+
+    <form action="#">
+        <input type="text" id="txtNome" placeholder="nome"><br><br>
+        <input type="text" id="txtEmail" placeholder="email"><br><br>
+        <!--O evento onchange é abilitado quando há mudanças-->
+        <input type="checkbox" id="contrato" onchange="enableOrDisableButton()">
+        <label for="contrato">Li e aceito o seguinte contrato</label><br><br>
+        <textarea name="" id="" cols="30" rows="10" readonly>Este contrato nos dá direito à ...</textarea><br><br>
+        <input type="submit" value="cadastrar" disabled>
+    </form>
+
+    <script>
+        function enableOrDisableButton(){
+            const contrato = document.getElementById('contrato')
+            //armazena o checkbox com id contrato
+            const submitBtn = document.querySelector('input[value="cadastrar"]')
+            //armazena o input que tem o value cadastrar
+            let checked = contrato.checked 
+            //armazena true ou false
+            
+
+            //if(termo) checa se termo é true se for a propriedade disabled é desligada, caso contrário disabled é ligada
+            if (checked){ 
+                submitBtn.disabled = false
+            }else{
+                submitBtn.disabled = true
+            }
+        }
+        /*  A solução acima é o modo simples de resolução
+        outra maneiras de fazê lo:
+
+        function enableOrDisableButton() {
+            const contrato = document.getElementById('contrato');
+            const submitBtn = document.querySelector('input[value="cadastrar"]');
+
+            submitBtn.disabled = !contrato.checked; // Define `disabled` diretamente com a negação do estado do checkbox
+        }
+
+        */
+    </script>
+
+</body>
+
+</html>
+
