@@ -10,6 +10,7 @@ const numUnicos = numeros.reduce(function(arr, numero){
     return arr
 }, [])
 
+console.log(numUnicos)
 
 /* Resolução do professor */
 
