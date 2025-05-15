@@ -41,7 +41,8 @@
 
     window.controller = {
         addItem: addItem,
-        addEventLi: addEventLi
+        addEventLi: addEventLi,
+        
     }
 
 })(window)

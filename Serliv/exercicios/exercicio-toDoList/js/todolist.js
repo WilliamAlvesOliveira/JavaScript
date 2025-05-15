@@ -5,7 +5,15 @@
     const inputTextBox = document.getElementById('item-input')
     const toDoAddForm = document.getElementById('todo-add')
     const toDoUnorderedList = document.getElementById('todo-list')
-    let TodosOsItens = document.querySelectorAll('li')
+    //const TodosOsItens = document.querySelectorAll('li')
+
+    let arrayDeTasks = [
+        {
+            nome: "task 1",
+            createAt: Date.now(),
+            completed: false
+        }
+    ]
 
     //acionamento do botão add
     toDoAddForm.addEventListener('submit', (submitEvent) => {
@@ -25,8 +33,8 @@
         inputTextBox.focus()
     });
 
-    [...TodosOsItens].forEach(item =>{
-        item.addEventListener('click', () => console.log(item))
+    arrayDeTasks.forEach(item =>{
+        addEventLi(item)
     })
 
 
