@@ -15,15 +15,21 @@
   let currentList = null
   let totalTests = 0
   let failedTests = 0
+  let beforeEachCallback = null
 
   function describe(title, fn) {
     currentList = createSection(title)
     fn()
   }
 
+  function beforeEach(callback) {
+    beforeEachCallback = callback
+  }
+
   function it(description, fn) {
     totalTests++
     const li = document.createElement('li')
+    if (beforeEachCallback) beforeEachCallback()
     try {
       fn()
       li.textContent = `✅ ${description}`
@@ -38,31 +44,30 @@
 
   function expect(received) {
     return {
-        toBe(expected) {
+      toBe(expected) {
         if (received !== expected) {
-            throw new Error(`Esperado "${expected}", mas recebeu "${received}"`)
+          throw new Error(`Esperado "${expected}", mas recebeu "${received}"`)
         }
-        },
-        toBeInstanceOf(constructor) {
+      },
+      toBeInstanceOf(constructor) {
         if (!(received instanceof constructor)) {
-            throw new Error(`Esperado instância de ${constructor.name}, mas recebeu ${received?.constructor?.name || 'nulo'}`)
+          throw new Error(`Esperado instância de ${constructor.name}, mas recebeu ${received?.constructor?.name || 'nulo'}`)
         }
-        },
-        toContain(text) {
+      },
+      toContain(text) {
         if (!received.includes(text)) {
-            throw new Error(`Esperado que "${received}" contenha "${text}"`)
+          throw new Error(`Esperado que "${received}" contenha "${text}"`)
         }
-        },
-        toBeCloseTo(expected, precision = 2) {
+      },
+      toBeCloseTo(expected, precision = 2) {
         const factor = Math.pow(10, precision)
         if (Math.round(received * factor) !== Math.round(expected * factor)) {
-            throw new Error(`Esperado aproximadamente ${expected} (precisão ${precision}), mas recebeu ${received}`)
+          throw new Error(`Esperado aproximadamente ${expected} (precisão ${precision}), mas recebeu ${received}`)
         }
-        }
+      }
     }
   }
 
-  // Função para mostrar status geral no topo da página
   function showTestSummary() {
     const header = document.createElement('div')
     header.style.fontWeight = 'bold'
@@ -85,9 +90,9 @@
     document.body.insertBefore(header, document.body.firstChild)
   }
 
-  // Exponha a função showTestSummary para chamar ao final dos testes
   window.describe = describe
   window.it = it
   window.expect = expect
+  window.beforeEach = beforeEach
   window.showTestSummary = showTestSummary
 })(window)
