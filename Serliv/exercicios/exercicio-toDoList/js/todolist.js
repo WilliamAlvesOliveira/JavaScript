@@ -9,17 +9,29 @@
     const arrayDeTarefas = []
 
     //função para adicionar listener aos itens da lista
-    function addEventLi(li){
-        li.addEventListener('click', function(){
-            const id = this.getAttribute('data-id')
-            logger.logINFO(`Usuario clicou no item: ID ${id}`)
-            console.log(this)/*
-            console.log(this.textContent)
-            console.log(this.innerText)
-            console.log(this.innerHTML)
-            console.log(this.outerHTML)*/
-        })
+    function onListClick(event) {
+        // event.target é o elemento específico que foi clicado (pode ser um <i>, <span> etc.)
+        // Usamos .closest('[data-action]') para subir até o ancestral mais próximo que contenha o atributo data-action
+        const clickedElement = event.target.closest('[data-action]')
+        if (!clickedElement) return
+
+        const dataAction = clickedElement.getAttribute('data-action')
+        logger.logINFO(`Ação detectada: ${dataAction}`)
+
+        const actions = {
+            checkButtonHandle: function () {
+            console.log('tarefa cumprida')
+            },
+            // future: editTaskHandle, deleteTaskHandle etc.
+        }
+
+        if (actions[dataAction]) {
+            actions[dataAction]()
+        } else {
+            logger.logWarn(`Ação "${dataAction}" não reconhecida.`)
+        }
     }
+
 
     //função de renderização das tarefas
     function renderizarTarefas(lista = arrayDeTarefas){
@@ -33,7 +45,6 @@
 
     function adicionarNovaTarefa(novaTarefa){
         const li = controller.criarNovaTarefa(novaTarefa)
-        addEventLi(li)
         toDoUnorderedList.appendChild(li)
         logger.logINFO('Nova tarefa adicionada!', novaTarefa)
     }
@@ -71,7 +82,9 @@
             logger.logWarn('Tarefa inválida. Nada foi adicionado.')
         }
     })
-
+    
+    //adiciona event listener a todos os elementos do toDoUnorderedList
+    toDoUnorderedList.addEventListener('click', onListClick)
 
     renderizarTarefas()
 

@@ -3,10 +3,10 @@
 
   function createSection(title) {
     const section = document.createElement('section')
-    const h2 = document.createElement('h2')
-    h2.textContent = title
+    const h3 = document.createElement('h3')
+    h3.textContent = title
     const ul = document.createElement('ul')
-    section.appendChild(h2)
+    section.appendChild(h3)
     section.appendChild(ul)
     document.body.appendChild(section)
     return ul

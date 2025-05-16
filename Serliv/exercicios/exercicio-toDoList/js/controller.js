@@ -34,20 +34,69 @@
         const novaTarefa = document.createElement('li')
         novaTarefa.classList.add('todo-item')
         novaTarefa.setAttribute('data-id', objetoTarefa.id)
-        novaTarefa.innerHTML = `
-        <button class="button-check">
-            <i class="fas fa-check displayNone"></i>
-        </button>
-        <p class="task-name">${objetoTarefa.nome}</p>
-        <i class="fas fa-edit"></i>
-        <div class="editContainer">
-                <input class="editInput" type="text">
-                <button class="editButton">Edit</button>
-                <button class="cancelButton">Cancel</button>
-        </div>
-        <i class="fas fa-trash-alt"></i>
-        `
-        logger.logINFO('Novo elemento criado!')
+        
+        const checkboxButton = document.createElement('button')
+        checkboxButton.classList.add('button-check')
+        checkboxButton.setAttribute('data-action','checkButtonHandle')
+
+        const checkIcon = document.createElement('i')
+        checkIcon.classList.add('fas','fa-check', 'displayNone')
+        checkboxButton.appendChild(checkIcon)
+        
+        novaTarefa.appendChild(checkboxButton)
+
+        const nomeDaTarefa = document.createElement('p')
+        nomeDaTarefa.classList.add('task-name')
+        nomeDaTarefa.textContent = objetoTarefa.nome
+        novaTarefa.appendChild(nomeDaTarefa)
+
+        const editIcon = document.createElement('i')
+        editIcon.classList.add('fas','fa-edit')
+        editIcon.setAttribute('data-action', 'editarTarefa')
+        novaTarefa.appendChild(editIcon)
+
+        const editContainer = document.createElement('div')
+        editContainer.classList.add('editContainer')
+
+        const editTextBox = document.createElement('input')
+        editTextBox.classList.add('editInput')
+        editTextBox.setAttribute('type','text')
+        editContainer.appendChild(editTextBox)
+
+        const editButton = document.createElement('button')
+        editButton.classList.add('editButton')
+        editButton.setAttribute('data-action','confirmarEdicao')
+        editButton.textContent = 'Edit'
+        editContainer.appendChild(editButton)
+
+        novaTarefa.appendChild(editContainer)
+
+        const cancelEdit = document.createElement('button')
+        cancelEdit.classList.add('cancelButton')
+        cancelEdit.setAttribute('data-action','cancelarEdicao')
+        cancelEdit.textContent = 'Cancelar'
+        editContainer.appendChild(cancelEdit)
+
+        const trashButton = document.createElement('i')
+        trashButton.classList.add('fas','fa-trash-alt')
+        trashButton.setAttribute('data-action','deletarTarefa')
+        novaTarefa.appendChild(trashButton)
+
+
+        // novaTarefa.innerHTML = `
+        // <button class="button-check">
+        //     <i class="fas fa-check displayNone"></i>
+        // </button>
+        // <p class="task-name">${objetoTarefa.nome}</p>
+        // <i class="fas fa-edit"></i>
+        // <div class="editContainer">
+        //         <input class="editInput" type="text">
+        //         <button class="editButton">Edit</button>
+        //         <button class="cancelButton">Cancel</button>
+        // </div>
+        // <i class="fas fa-trash-alt"></i>
+        // `
+        // logger.logINFO('Novo elemento criado!')
         return novaTarefa
     }
 
