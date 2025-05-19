@@ -27,9 +27,6 @@
             logger.logWarn('Campo vazio')
             return
         }
-    
-
-        logger.logINFO('Adicionando item: ', objetoTarefa.nome)
 
         const novaTarefa = document.createElement('li')
         novaTarefa.classList.add('todo-item')
@@ -41,6 +38,9 @@
 
         const checkIcon = document.createElement('i')
         checkIcon.classList.add('fas','fa-check', 'displayNone')
+        if(objetoTarefa.concluido === true){
+            checkIcon.classList.remove('displayNone')
+        }
         checkboxButton.appendChild(checkIcon)
         
         novaTarefa.appendChild(checkboxButton)
@@ -61,6 +61,7 @@
         const editTextBox = document.createElement('input')
         editTextBox.classList.add('editInput')
         editTextBox.setAttribute('type','text')
+        editTextBox.value = objetoTarefa.nome
         editContainer.appendChild(editTextBox)
 
         const editButton = document.createElement('button')
@@ -102,7 +103,7 @@
 
     window.controller = {
         criarTarefa,
-        criarNovaTarefa: criarNovaTarefa
+        criarNovaTarefa
     }
 
 })(window)

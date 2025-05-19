@@ -1,6 +1,13 @@
 ;(function (window) {
   'use strict'
 
+  const hooks = {
+    beforeAll: [],
+    beforeEach: [],
+    afterEach: [],
+    afterAll: []
+  }
+
   function createSection(title) {
     const section = document.createElement('section')
     const h3 = document.createElement('h3')
@@ -12,6 +19,30 @@
     return ul
   }
 
+  function beforeAll(fn) {
+    hooks.beforeAll.push(fn)
+  }
+
+  function beforeEach(fn) {
+    hooks.beforeEach.push(fn)
+  }
+
+  function afterEach(fn) {
+    hooks.afterEach.push(fn)
+  }
+
+  function afterAll(fn) {
+    hooks.afterAll.push(fn)
+  }
+
+  function runHooks(hookType) {
+    try {
+      hooks[hookType].forEach(fn => fn())
+    } catch (e) {
+      console.error(`Erro ao executar ${hookType}:`, e)
+    }
+  }
+
   let currentList = null
   let totalTests = 0
   let failedTests = 0
@@ -19,17 +50,18 @@
 
   function describe(title, fn) {
     currentList = createSection(title)
+    runHooks('beforeAll')
     fn()
-  }
-
-  function beforeEach(callback) {
-    beforeEachCallback = callback
+    runHooks('afterAll')
   }
 
   function it(description, fn) {
     totalTests++
     const li = document.createElement('li')
+    
+    runHooks('beforeEach')
     if (beforeEachCallback) beforeEachCallback()
+    
     try {
       fn()
       li.textContent = `✅ ${description}`
@@ -39,6 +71,8 @@
       li.innerHTML = `❌ ${description}<br><code>${err.message}</code>`
       li.style.color = 'red'
     }
+    
+    runHooks('afterEach')
     currentList.appendChild(li)
   }
 
@@ -58,41 +92,42 @@
         if (!received.includes(text)) {
           throw new Error(`Esperado que "${received}" contenha "${text}"`)
         }
-      },
-      toBeCloseTo(expected, precision = 2) {
-        const factor = Math.pow(10, precision)
-        if (Math.round(received * factor) !== Math.round(expected * factor)) {
-          throw new Error(`Esperado aproximadamente ${expected} (precisão ${precision}), mas recebeu ${received}`)
-        }
       }
     }
   }
 
   function showTestSummary() {
     const header = document.createElement('div')
-    header.style.fontWeight = 'bold'
-    header.style.fontSize = '1.4em'
-    header.style.marginBottom = '1em'
-    header.style.padding = '1em'
-    header.style.borderRadius = '6px'
-    header.style.textAlign = 'center'
+    header.style.cssText = `
+      font-weight: bold;
+      font-size: 1.4em;
+      margin-bottom: 1em;
+      padding: 1em;
+      border-radius: 6px;
+      text-align: center;
+    `
+    
     if (failedTests === 0) {
       header.textContent = `✅ TESTES PASSARAM: ${totalTests} testes`
-      header.style.color = 'green'
       header.style.backgroundColor = '#d4edda'
       header.style.border = '1px solid #c3e6cb'
+      header.style.color = 'green'
     } else {
       header.textContent = `❌ TESTES FALHARAM: ${failedTests} de ${totalTests} testes`
-      header.style.color = 'red'
       header.style.backgroundColor = '#f8d7da'
       header.style.border = '1px solid #f5c6cb'
+      header.style.color = 'red'
     }
+    
     document.body.insertBefore(header, document.body.firstChild)
   }
 
   window.describe = describe
   window.it = it
-  window.expect = expect
+  window.beforeAll = beforeAll
   window.beforeEach = beforeEach
+  window.afterEach = afterEach
+  window.afterAll = afterAll
+  window.expect = expect
   window.showTestSummary = showTestSummary
 })(window)

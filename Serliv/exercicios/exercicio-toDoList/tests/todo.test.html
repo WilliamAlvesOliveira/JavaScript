@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Testes to do list</title>
   <style>
     body {
@@ -13,7 +13,6 @@
       text-align: center;
       margin-bottom: 1em;
     }
-
     section {
       margin-bottom: 2em;
     }
@@ -29,17 +28,39 @@
       white-space: pre-wrap;
     }
   </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
-  <h1>Testes to Do list</h1>
+  <div id="test-container">
+    <!-- Container para os testes -->
+    <h1>Testes to Do list</h1>
+    
+    <!-- Estrutura básica necessária para os testes -->
+    <div id="app-container" style="display: none;">
+      <ul id="todo-list"></ul>
+      <form id="todo-add">
+        <input id="item-input" type="text">
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts na ordem correta -->
   <script src="../js/logger.js"></script>
+  <script src="../js/storage.js"></script>
   <script src="../js/controller.js"></script>
+  <script src="../js/todolist.js"></script>
   <script src="./SimuladorDeTestes.js"></script>
   
-  <h2>Testes - controller.js</h2>
   <script src="./controller.test.js"></script>
-
-  <h2>Testes - todolist.js</h2>
   <script src="./todo.test.js"></script>
+
+  <script>
+    // Mostra o resumo após todos os testes
+    setTimeout(() => {
+      if (typeof showTestSummary === 'function') {
+        showTestSummary();
+      }
+    }, 500);
+  </script>
 </body>
 </html>

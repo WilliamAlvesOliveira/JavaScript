@@ -41,6 +41,3 @@ describe('controller.criarNovaTarefa()', () => {
     expect(icon.classList.contains('displayNone')).toBe(true)
   })
 })
-
-
-showTestSummary()
