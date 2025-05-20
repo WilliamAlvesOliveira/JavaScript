@@ -14,7 +14,7 @@ body{
     font-family: 'Open Sans',sans-serif;
     letter-spacing: .2rem;   
     display: flex;
-    background-image: radial-gradient(blue,blue);
+    background-image: radial-gradient(rgb(1, 1, 149),rgb(0, 0, 255));
 }
 
 body,html{
@@ -42,8 +42,9 @@ ion-icon{
 .todo-list__app{
    background-color:rgb(247, 247, 247);
    border-radius: 8px;
-   box-shadow: 2px 2px 15px rgba(77, 77, 77, .5);
+   box-shadow: 2px 2px 15px rgba(77, 77, 77, 0.722);
    border:3px solid rgb(10, 10, 139);
+   outline: 1px solid rgba(247, 247, 247, 0.404);
    
    min-width:37.5rem;
    margin: auto;
@@ -56,8 +57,15 @@ ion-icon{
     color: white;
 }
 
+.permanent-marker-regular {
+  font-family: "Permanent Marker", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
 .todo-add-item__container >.heading{
     font-size:3rem;
+    font-family: "Permanent Marker", cursive;
 }
 
 .todo-add-item{
@@ -156,7 +164,7 @@ input[type="submit"]:hover {
 
 .editContainer{
     position:absolute;
-    z-index: 99999;
+    z-index: 5;
     top:4rem;
     left:2rem;
     width:120%;

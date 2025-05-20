@@ -52,12 +52,20 @@
                 confirmarEdicao: function(){
                     const editInput = currentLi.querySelector('.editInput')
 
-                    const novoNome = editInput.value
+                    const novoNome = editInput.value.trim()
                     const nomeAntigo = arrayDeTarefas[currentLiIndex].nome
+
+                    if(novoNome === nomeAntigo){
+                        const editContainer = currentLi.querySelector('.editContainer')
+                        editContainer.removeAttribute('style')
+                        logger.logINFO('Nenhuma alteração detectada')
+                        currentLi.querySelector('.editInput').value = arrayDeTarefas[currentLiIndex].nome 
+                        return
+                    }
 
                     arrayDeTarefas[currentLiIndex].nome = novoNome
                     
-                    logger.logINFO(`Tarefa ${nomeAntigo} foi açterada para ${novoNome}`)
+                    logger.logINFO(`Tarefa ${nomeAntigo} foi alterada para ${novoNome}`)
 
                     storage.setNewData(arrayDeTarefas)
                     renderizarTarefas()
