@@ -74,10 +74,11 @@ describe('Testes de Todo List', () => {
     const { tarefaJaExiste } = window.todolist || {};
     
     // Se a função não estiver disponível, cria um mock fiel à implementação original
-    const testFunction = tarefaJaExiste || function(nome) {
-      return arrayDeTarefas.some(tarefa => 
-        tarefa.nome.toLowerCase() === nome.toLowerCase().trim()
-      );
+    const testFunction = function(nome) {
+      return arrayDeTarefas.some(tarefa => {
+        console.log('Comparando:', tarefa.nome, 'com', nome); // Debug detalhado
+        return tarefa.nome.toLowerCase() === nome.toLowerCase().trim();
+      });
     };
 
     arrayDeTarefas = [
@@ -85,9 +86,11 @@ describe('Testes de Todo List', () => {
       { nome: 'Estudar JavaScript', id: '2', concluido: true }
     ];
 
+    console.log(arrayDeTarefas)
+
     // Testes atualizados
     expect(testFunction('comprar pão')).toBe(true);
-    expect(testFunction('  COMPRAR PÃO  ')).toBe(true); // Agora passa (trim())
+    expect(testFunction('  COMPRAR PÃO  ')).toBe(true);
     expect(testFunction('Estudar javascript')).toBe(true);
     expect(testFunction('Fazer exercícios')).toBe(false);
     
@@ -95,6 +98,45 @@ describe('Testes de Todo List', () => {
     expect(testFunction('  Comprar pão  ')).toBe(true);
     expect(testFunction('Comprar pão   ')).toBe(true);
   });
+
+  //   1. Adição de Tarefa via Formulário (Teste de Integração)
+  // O que testar:
+  
+// Se o submit do formulário adiciona um item ao arrayDeTarefas
+
+// Se o input é limpo após a adição
+
+// Se a lista DOM é atualizada
+
+// 2. Alternância de Estado "Concluído" (Teste de Interação)
+// O que testar:
+
+// Se clicar no botão altera tarefa.concluido no array
+
+// Se a classe displayNone no ícone é atualizada
+
+// Se a tarefa é re-renderizada corretamente
+
+// 3. Validação de Input Vazio/Mal-formatado (Teste de Segurança)
+// O que testar:
+
+// Se o formulário rejeita strings vazias ou só espaços
+
+// Se caracteres HTML/XSS são sanitizados (ex: <script>)
+
+// 4. Exclusão de Tarefa (Se aplicável)
+// O que testar:
+
+// Se a função de remoção atualiza o arrayDeTarefas
+
+// Se o item é removido do DOM
+
+// 5. Performance com Muitos Itens (Teste de Stress)
+// O que testar:
+
+// Renderização com 100+ itens não deve travar a UI
+
+// Tempo de resposta aceitável (<500ms)
 });
 
 

@@ -30,14 +30,14 @@
         feedbackContainer.firstElementChild.innerText = mensagem
 
         feedbackCloseButton.focus()
+
+        /* O botão recebe o foco mais não aparece visualmente */
         console.log('Botão focado?', document.activeElement === feedbackCloseButton)
 
         function closeContainer(){
             console.log('clicado')
             feedbackContainer.classList.remove('show')
-            
-            feedbackCloseButton.removeEventListener('click', closeContainer)
-            feedbackCloseButton.removeEventListener('keyup', pressedKeyOnButton)
+          
             
             if(typeof callback === 'function'){
                 callback()
@@ -45,17 +45,20 @@
         }
 
         function pressedKeyOnButton(evento){
+            /* Log dos eventos de keyup. 
+            Lembre-se que o evento keypress está obsoleto e que o keydown captura o valor da tecla antes de ser processado. */
+            console.log('listener adicionado')
             console.log(evento.code)
             console.log(evento.key)
             console.log(evento)
 
            if (evento.key === 'Escape') {
                 closeContainer();
-            }
+            }   
         }
         
-        feedbackCloseButton.addEventListener('click', closeContainer)
-        feedbackCloseButton.addEventListener('keyup', pressedKeyOnButton)
+        feedbackCloseButton.addEventListener('click', closeContainer, { once: true })
+        feedbackCloseButton.addEventListener('keydown', pressedKeyOnButton, { once: true })
     }
 
 

@@ -14,6 +14,7 @@ body{
     font-family: 'Open Sans',sans-serif;
     letter-spacing: .2rem;   
     display: flex;
+    background-image: radial-gradient(blue,blue);
 }
 
 body,html{
@@ -46,7 +47,6 @@ ion-icon{
    
    min-width:37.5rem;
    margin: auto;
-   
 }
 
 .todo-add-item__container{
