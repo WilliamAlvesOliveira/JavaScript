@@ -66,6 +66,7 @@ ion-icon{
 .todo-add-item__container >.heading{
     font-size:3rem;
     font-family: "Permanent Marker", cursive;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.855);
 }
 
 .todo-add-item{
