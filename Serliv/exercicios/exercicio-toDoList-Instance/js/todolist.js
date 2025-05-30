@@ -3,16 +3,48 @@
 
 
 
-	function Task(name, completed, createdAt, updatedAt){
-		// crie uma funcao construtora chamada Task. 
-        // essa funcao recebe por parametro obrigatório o nome da tarefa
-        // também recebe tres parametros opcionais (completed, createdAt, updatedAt)
-        // o objeto retornado por essa funcao deve ter quatro propriedades:
+    // crie uma funcao construtora chamada Task.
+    // essa funcao recebe por parametro obrigatório o nome da tarefa
+    // também recebe tres parametros opcionais (completed, createdAt, updatedAt)
+    // o objeto retornado por essa funcao deve ter quatro propriedades:
+	class Task {
         //  - name - string - obrigatório, 
         //  - completed - boolean - opcional, false é o default, 
         //  - createdAt - timestamp - opcional, timestamp atual é o valor default) 
         //  - updatedAt - timestamp - opcional, null é o valor default
         // o objeto retornado por essa funcao deve ter um método chamado toggleDone, que deve inverter o boolean completed
+        #name
+        constructor(
+            name, 
+            completed = false,
+            createdAt = Date.now(), 
+            updatedAt = null
+        ){
+            if (!name) throw new Error('Nome não pode estar vazio')
+            
+            this.#name = name
+            this.completed = completed
+            this.createdAt = createdAt
+            this.updatedAt = updatedAt
+        }
+
+        toggleDone(){
+            this.completed = !this.completed
+            this.updatedAt = Date.now()
+        }
+
+        getName() {
+            return this.#name
+        }
+
+        setName(newname){
+            if (!newname) throw new Error('Nome não pode estar vazio')
+            console.log(this)
+        this.#name = newname
+        this.updatedAt = Date.now()
+        console.log(this)
+
+        }
 	}
 
 	let arrTasks = [
@@ -39,6 +71,10 @@
     // a partir de um array de objetos literais, crie um array contendo instancias de Tasks. 
     // Essa array deve chamar arrInstancesTasks
 	// const arrInstancesTasks = DESCOMENTE ESSA LINHA E RESOLVA O ENUNCIADO
+    const arrInstancesTasks = arrTasks.map(task => {
+        const {name, completed, createAt, updatedAt} = task
+        return new Task(name, completed, createAt, updatedAt)
+    })
 
 
 
@@ -67,7 +103,7 @@
         li.appendChild(checkButton)
 
         p.className = "task-name"
-        p.textContent = obj.name
+        p.textContent = obj.getName()
         li.appendChild(p)
 
         editButton.className = "fas fa-edit"
@@ -80,7 +116,7 @@
         const inputEdit = document.createElement("input")
         inputEdit.setAttribute("type", "text")
         inputEdit.className = "editInput"
-        inputEdit.value = obj.name
+        inputEdit.value = obj.getName()
 
         containerEdit.appendChild(inputEdit)
         const containerEditButton = document.createElement("button")
@@ -112,10 +148,10 @@
         });
     }
 
-    function addTask(task) {
+    function addTask(taskname) {
         // adicione uma nova instancia de Task
+        arrInstancesTasks.push(new Task(taskname))
         renderTasks()
-
     }
 
     function clickedUl(e) {
@@ -148,17 +184,17 @@
             },
             containerEditButton: function () {
                 const val = currentLi.querySelector(".editInput").value
-                arrInstancesTasks[currentLiIndex].name = val
+                arrInstancesTasks[currentLiIndex].setName(val)
                 renderTasks()
             },
             containerCancelButton: function () {
                 currentLi.querySelector(".editContainer").removeAttribute("style")
-                currentLi.querySelector(".editInput").value = arrInstancesTasks[currentLiIndex].name
+                currentLi.querySelector(".editInput").value = arrInstancesTasks[currentLiIndex].getName()
             },
             checkButton: function () {
 
                 // DEVE USAR O MÉTODO toggleDone do objeto correto
-
+                arrInstancesTasks[currentLiIndex].toggleDone()
 	            renderTasks()
             }
         }
