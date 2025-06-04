@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button>função de escopo</button>
+
+    <script src="escopo.js"></script>
+
+    <script>
+        const botão = document.querySelector('button')
+        const _this = this
+
+        botão.addEventListener('click', function(){
+            console.log('função anônima')
+            console.log(this)//this dinâmico
+            console.log(_this)
+            console.log(this === _this)//falso pois o this refere-se ao objeto button do dom
+        })
+        
+        botão.addEventListener('click', () => {
+            console.log('arrow function')
+            console.log(this)//this estático
+            console.log(_this)
+            console.log(this === _this)//true pois ambos referem-se ao objeto window
+        })
+    </script>
+</body>
+</html>
