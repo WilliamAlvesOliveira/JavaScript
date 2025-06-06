@@ -48,7 +48,7 @@ console.log('---------')
 //vamos criar uma variável para mostrar a posição do cachorro 
 
 function createDog2(name){
-    let position = 0
+    let position = 0 //variavel que será acessada via closure
     return {
         name, //shorthand pois name : name
         latir(){
@@ -77,3 +77,50 @@ const toto2 = createDog2('Totó')
 toto2.andar(20)
 toto2.andar(-3)
 console.log(toto2.showPosition())
+
+/* =========================================================================
+  🧠 ANOTAÇÕES E EXPLICAÇÕES SOBRE FACTORY FUNCTIONS
+
+  ✅ O que é uma Factory Function?
+  - É uma função que retorna um objeto novo.
+  - Alternativa à função construtora (que usa 'new').
+  - Permite encapsular lógica e estado interno usando closures.
+
+  ✅ Diferença entre Factory Function e Função Construtora:
+  - Factory Function: 
+      - É uma função comum (ex: function createDog()).
+      - Retorna um objeto manualmente.
+      - Não precisa usar 'new'.
+      - Pode usar variáveis privadas via closure (ex: let position).
+  - Função Construtora:
+      - Começa com letra maiúscula (ex: function Dog()).
+      - Usa 'this' para definir propriedades.
+      - Usa o operador 'new' para instanciar.
+      - Não oferece encapsulamento por padrão.
+
+  ✅ Exemplo de uso da Factory Function:
+  const rex = createDog('Rex')
+  rex.andar(5)
+
+  ✅ Encapsulamento com closure:
+  - No exemplo com createDog2(), a variável 'position' só pode ser acessada/modificada pelos métodos definidos no retorno.
+  - Isso protege o estado interno do objeto contra acessos diretos.
+
+  ✅ Performance:
+  - Em projetos grandes, criar métodos dentro da factory function pode afetar a performance,
+    pois cada instância recebe sua própria cópia dos métodos.
+  - Para mitigar isso, pode-se mover os métodos para fora da função e referenciá-los,
+    ou usar protótipos (mais comum com funções construtoras ou classes).
+
+  ✅ Quando usar?
+  - Factory Functions são muito úteis quando:
+      - Você precisa de encapsulamento via closure.
+      - Você quer evitar o uso de 'new'.
+      - Você deseja uma sintaxe mais simples e clara para funções pequenas/modulares.
+
+  ✅ Curiosidade:
+  - Em bibliotecas modernas (como React), factory functions são muito utilizadas
+    para criar componentes ou hooks personalizados.
+
+========================================================================== */
+
