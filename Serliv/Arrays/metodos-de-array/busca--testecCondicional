@@ -1,0 +1,42 @@
+/*
+    Métodos de busca e teste condicional
+*/
+
+const frutas = ["maçã", "banana", "laranja", "abacaxi", "banana", "uva"];
+
+console.log("Array original:", frutas);
+
+// 1. find - retorna o primeiro elemento que satisfaz o teste
+const frutaComA = frutas.find(fruta => fruta.startsWith("a"));
+console.log("Primeira fruta começando com 'a':", frutaComA);
+// Saída: "abacaxi"
+
+// 2. findIndex - retorna o índice do primeiro elemento que satisfaz o teste
+const indiceBanana = frutas.findIndex(fruta => fruta === "banana");
+console.log("Índice da primeira banana:", indiceBanana);
+// Saída: 1
+
+// 3. some - retorna true se algum elemento satisfaz o teste
+const temUva = frutas.some(fruta => fruta === "uva");
+console.log("Tem uva no array?", temUva);
+// Saída: true
+
+// 4. every - retorna true se todos os elementos satisfazem o teste
+const todosTemA = frutas.every(fruta => fruta.includes("a"));
+console.log("Todas as frutas têm a letra 'a'?", todosTemA);
+// Saída: true
+
+// 5. includes - verifica se o array contém o valor
+const temMaca = frutas.includes("maçã");
+console.log("Array inclui maçã?", temMaca);
+// Saída: true
+
+// 6. indexOf - retorna o índice da primeira ocorrência do valor
+const primeiraBanana = frutas.indexOf("banana");
+console.log("Primeira ocorrência de banana:", primeiraBanana);
+// Saída: 1
+
+// 7. lastIndexOf - retorna o índice da última ocorrência do valor
+const ultimaBanana = frutas.lastIndexOf("banana");
+console.log("Última ocorrência de banana:", ultimaBanana);
+// Saída: 4
