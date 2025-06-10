@@ -128,3 +128,4 @@ let dobrados = numeros.map2(function(valor) {
 })
 
 console.log(dobrados) // [2, 4, 6, 8]
+    
