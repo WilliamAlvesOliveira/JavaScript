@@ -58,3 +58,5 @@ console.log('obj2 está congelado após preventExtensions?', Object.isFrozen(obj
         writable: false
         configurable: false
 ===========================================*/
+
+//obs:assim como o método frozen tem o is frozem e pode ser feito sem o própriométodo, o seal tem Object.isSealed e o prevente extenwionw  tem o Object.isExtensible
