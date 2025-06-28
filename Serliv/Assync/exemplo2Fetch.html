@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Primeiro exemplo</title>
+</head>
+<body>
+  <h1>Primeiro exemplo com XMLHttpRequest</h1>
+
+  <script src="HttpRequestFetch.js"></script>
+  <script>
+    
+    fetchData('GET', 'dados2.json', null, mostrarUsuarios)
+    //poderiamos passar a função anonima
+    // createXMLHttpRequest('GET', 'dados2.json', null, function(data){console.log(data)})
+    
+    fetchData('GET', 'dados.json', null, mostrarUsuarios)
+    function mostrarUsuarios(data){
+        console.log(data)
+        console.log('----------------------')
+    }
+  </script>
+</body>
+</html>

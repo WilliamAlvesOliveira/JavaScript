@@ -33,12 +33,18 @@ class AlunosService {
      * @returns {AlunoModel} Aluno editado (sem lógica implementada)
      */
     edit(aluno) {
-        return aluno; // Lógica mínima (para implementação futura)
+        aluno.generateAvarege()
+        this.updateLocalStorage()
     }
 
     searchById(id){
         return this.alunos.find(aluno => aluno._id === id)
     }
+
+    search(name) {
+    return this.alunos.filter(aluno => aluno.nome.includes(name));
+}
+
 
     updateLocalStorage(){
         const alunosJSON = JSON.stringify(this.alunos)

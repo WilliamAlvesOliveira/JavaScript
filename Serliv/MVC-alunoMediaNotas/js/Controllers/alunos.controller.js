@@ -34,6 +34,12 @@ class AlunosController {
             // Exemplo: this.view.showError('Falha ao adicionar aluno.');
         }
     }
+
+    search(name) {
+    const data = this.service.search(name);
+    console.log(data);
+    this.view.renderList(data);  // Agora renderiza com um array
+}
 }
 
 /**

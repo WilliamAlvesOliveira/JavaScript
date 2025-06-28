@@ -1,0 +1,36 @@
+{
+    "tasks":[
+        {
+            "title": "primeira tarefa",
+            "completed": false,
+            "createAt": "",
+            "updatedAt": "",
+            "userId": 1
+        },
+        {
+            "title": "segunda tarefa",
+            "completed": false,
+            "createAt": "",
+            "updatedAt": "",
+            "userId": 1
+        },
+        {
+            "title": "tereceira tarefa",
+            "completed": false,
+            "createAt": "",
+            "updatedAt": "",
+            "userId": 1
+        }
+
+    ],
+    "users":[
+        {
+            "id": 1,
+            "email":"william@server.com"
+        },
+        {
+            "id": 2,
+            "email":"maria@server.com"
+        }
+    ]
+}

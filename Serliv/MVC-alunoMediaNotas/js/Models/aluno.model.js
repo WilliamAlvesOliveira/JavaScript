@@ -27,9 +27,9 @@ class AlunoModel {
 
         // Calcula as médias automaticamente ao criar o aluno
         this.media = {};
-        for (let materia in this.notas) {
-            this.media[materia] = avarege(...this.notas[materia]); // Usa a função externa `avarege`
-        }
+
+        this.generateAvarege()
+        
     }
 
     /**
@@ -38,6 +38,12 @@ class AlunoModel {
      */
     generateId() {
         return AlunoModel.maxId + 1;
+    }
+
+    generateAvarege(){
+        for (let materia in this.notas) {
+            this.media[materia] = avarege(...this.notas[materia]); // Usa a função externa `avarege`
+        }
     }
 }
 

@@ -83,6 +83,22 @@ document.querySelector('form').addEventListener('submit', function(e) {
     }
 });
 
+document.querySelector('#search_name').addEventListener('input', function() {
+    const name = this.value.trim();
+    sessionStorage.setItem('search', name)
+
+    if (name.length > 2 || name.length === 0) {
+        alunosController.search(name);
+    }
+});
+
+const inputEvent = new Event('input')
+
+if(sessionStorage.getItem('search')){
+    document.querySelector('#search_name').value = sessionStorage.getItem('search')
+    document.querySelector('#search_name').dispatchEvent(inputEvent)
+}
+
 /**
  * ===============================================
  * CÓDIGO LEGADO (COMENTADO)

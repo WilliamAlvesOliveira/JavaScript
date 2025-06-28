@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Primeiro exemplo</title>
+</head>
+<body>
+  <h1>Primeiro exemplo com XMLHttpRequest</h1>
+
+  <script>
+    // Cria uma nova instância do objeto XMLHttpRequest
+    const xhr = new XMLHttpRequest()
+
+    // Configura a requisição: método GET e o arquivo local 'dados.json'
+    xhr.open("GET", 'dados.json')
+
+    // Envia a requisição (nesse caso, sem corpo - por isso 'null')
+    xhr.send(null)
+
+    // Define a função que será chamada toda vez que o estado da requisição mudar
+    xhr.onreadystatechange = verificaAjax
+
+    // Função que será executada quando o readyState mudar
+    function verificaAjax() {
+      // Mostra o estado atual da requisição (de 0 a 4)
+      console.log(xhr.readyState)
+
+      // Mostra o status HTTP retornado (ex: 200 OK, 404 Not Found)
+      console.log(xhr.status)
+
+      // Mostra o conteúdo bruto da resposta
+      console.log(xhr.response)
+
+    //     🔄 readyState
+    //
+    //     Valor	Significado
+    //     0	    Requisição não iniciada
+    //     1	    Conexão estabelecida
+    //     2	    Requisição recebida
+    //     3	    Processando resposta
+    //     4	    Requisição finalizada
+
+      // Só executa o código abaixo se a requisição estiver completa (estado 4)
+      if (xhr.readyState === 4) {
+
+        // Verifica se a resposta foi bem-sucedida (200) ou veio do cache (304)
+        if (xhr.status === 200 || xhr.status === 304) {
+
+          console.log('se o status response for 200 ou 304')
+
+          // Mostra o texto retornado pelo servidor (formato JSON como string)
+          console.log(xhr.responseText)
+
+          // Mostra o tipo do dado (ainda é uma string!)
+          console.log(typeof xhr.responseText)
+
+          // Converte a string JSON em um objeto JavaScript
+          const Json = JSON.parse(xhr.responseText)
+
+          // Mostra o objeto JSON convertido
+          console.log('JSON')
+          console.log(Json)
+
+          // Mostra o primeiro item do array JSON (se for uma lista)
+          console.log(Json[0])
+        }
+      }
+    }
+  </script>
+</body>
+</html>

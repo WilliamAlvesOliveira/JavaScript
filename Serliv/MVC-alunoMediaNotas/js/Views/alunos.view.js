@@ -43,11 +43,12 @@ class AlunosView {
      * @param {AlunosService} service - Serviço com os dados dos alunos
      */
     render(service) {
+        console.log(service)
         this.tableBody.innerHTML = ''; // Limpa a tabela antes de atualizar
-
+    
         service.alunos.forEach(aluno => {
             const row = document.createElement('tr');
-            let rowContent = `<td>${aluno.nome}</td>`; // Coluna do nome
+            let rowContent = `<td><a href='edit.html?id=${aluno._id}'>${aluno.nome}</a></td>`; // Coluna do nome
 
             // Verifica se o aluno tem notas em alguma matéria
             const hasNotes = this.materias.some(materia => materia in aluno.notas);
@@ -75,6 +76,38 @@ class AlunosView {
             this.tableBody.appendChild(row);
         });
     }
+
+    renderList(alunos) {
+    this.tableBody.innerHTML = '';
+
+    alunos.forEach(aluno => {
+        const row = document.createElement('tr');
+        let rowContent = `<td><a href='edit.html?id=${aluno._id}'>${aluno.nome}</a></td>`;
+
+        const hasNotes = this.materias.some(materia => materia in aluno.notas);
+
+        if (hasNotes) {
+            this.materias.forEach(materia => {
+                rowContent += `
+                    <td>
+                        ${aluno.media[materia] !== undefined ?
+                            aluno.media[materia] :
+                            `<a href='edit.html?id=${aluno._id}'>incluir nota</a>`
+                        }
+                    </td>`;
+            });
+        } else {
+            rowContent += `
+                <td colspan="${this.materias.length}">
+                    <a href='edit.html?id=${aluno._id}'>incluir notas</a>
+                </td>`;
+        }
+
+        row.innerHTML = rowContent;
+        this.tableBody.appendChild(row);
+    });
+}
+
 }
 
 
