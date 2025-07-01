@@ -8,9 +8,9 @@ export function createXMLHttpRequest(method, url, callback, data = null) {
 
     // Cria uma nova instância de XMLHttpRequest
     const xhr = new XMLHttpRequest()
-
     // Inicializa a requisição com o método e a URL
     xhr.open(method, url)
+    xhr.setRequestHeader("Content-Type'", "application/json;charset=UTF-8")
 
     // Envia a requisição. Se o método for GET, o 'data' será ignorado.
     xhr.send(data)
@@ -25,7 +25,7 @@ export function createXMLHttpRequest(method, url, callback, data = null) {
         if (xhr.readyState === 4) {
 
             // status 200: OK | status 304: conteúdo não modificado (cache)
-            if (xhr.status === 200 || xhr.status === 304) {
+            if (xhr.status < 400) {
 
                 // Converte a resposta JSON (texto) em objeto JavaScript
                 const json = JSON.parse(xhr.responseText)

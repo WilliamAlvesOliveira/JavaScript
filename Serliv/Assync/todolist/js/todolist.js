@@ -3,7 +3,12 @@ import { createXMLHttpRequest } from './createXMLHttpRequest.js'
 
 //const UrlTodo = 'https://jsonplaceholder.typicode.com/users/1/todos/'
 const UrlTodo = 'http://localhost:3000/tasks?userId=1'
-createXMLHttpRequest('GET', UrlTodo, init)
+const UrlUsers = 'http://localhost:3000/users'
+const UrlTask = 'http://localhost:3000/tasks'
+
+const userId = 1
+
+createXMLHttpRequest('GET', `${UrlTask}?userId=${userId}`, init)
     let arrTasks = [
         {
             name: "task 1",
@@ -106,9 +111,14 @@ function init(arrTasks){
 
     function addTask(taskName) {
         // adicione uma nova instancia de Task
-        arrInstancesTasks.push(new Task(taskName))
-        renderTasks()
+        const cb = function({title}){
+            arrInstancesTasks.push(new Task(title))
+            renderTasks()
+        }
+ 
+        const taskString =JSON.stringify({title : taskName, userId})
 
+        createXMLHttpRequest('POST', UrlTask, cb, taskString)
     }
 
     function clickedUl(e) {
@@ -165,7 +175,6 @@ function init(arrTasks){
         e.preventDefault()
         console.log(itemInput.value)
         addTask(itemInput.value)
-        renderTasks()
 
         itemInput.value = ""
         itemInput.focus()
