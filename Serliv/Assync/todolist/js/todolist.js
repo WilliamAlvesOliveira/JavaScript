@@ -1,49 +1,49 @@
 import {Task} from './Model/todoTask.model.js'
 import { createXMLHttpRequest } from './createXMLHttpRequest.js'
+import TaskService from './Service/Task.service.js'
+import TasksController from './Controller/Tasks,controller.js'
+import TasksView from './View/Tasks.view.js'
 
 //const UrlTodo = 'https://jsonplaceholder.typicode.com/users/1/todos/'
-const UrlTodo = 'http://localhost:3000/tasks?userId=1'
-const UrlUsers = 'http://localhost:3000/users'
+//const UrlTodo = 'http://localhost:3000/tasks?userId=1'
+
 const UrlTask = 'http://localhost:3000/tasks'
 
 const userId = 1
 
-createXMLHttpRequest('GET', `${UrlTask}?userId=${userId}`, init)
-    let arrTasks = [
-        {
-            name: "task 1",
-            completed: true,
-            createdAt: 1592667375012,
-            updatedAt: null
-        },
-        {
-            name: "task 2",
-            createdAt: 1581667345723,
-            updatedAt: 1592667325018
-        },
-        {
-            name: "task 3",
-            completed: true,
-            createdAt: 1592667355018,
-            updatedAt: 1593677457010
-        }
-    ]
+const taskService = new TaskService()
+const tasksView = new TasksView()
+const taskController = new TasksController(taskService, tasksView)
 
-function init(arrTasks){
+const itemInput = document.getElementById("item-input")
+const todoAddForm = document.getElementById("todo-add")
+const ul = document.getElementById("todo-list")
+const lis = ul.getElementsByTagName("li")
+
+taskService.getTask(userId, init)
+
+todoAddForm.addEventListener("submit", function (e) {
+    e.preventDefault()
+    console.log(itemInput.value)
+    taskController.add(itemInput.value, userId)
+
+    itemInput.value = ""
+    itemInput.focus()
+});
+
+function init(arrInstancesTasks){
      // a partir de um array de objetos literais, crie um array contendo instancias de Tasks. 
     // Essa array deve chamar arrInstancesTasks
-    if(arrTasks.error) return
-   
-    const arrInstancesTasks = arrTasks.map(task => {
-        const { title, completed, createdAt, updatedAt } = task
-        return new Task(title, completed, createdAt, updatedAt)
-    })
+    if(arrInstancesTasks.error) return
+    console.log('=======')
+    console.log(arrInstancesTasks)
+    // const arrInstancesTasks = arrTasks.map(task => {
+    //     const { title, completed, createdAt, updatedAt } = task
+    //     return new Task(title, completed, createdAt, updatedAt)
+    // })
     
     //ARMAZENAR O DOM EM VARIAVEIS
-    const itemInput = document.getElementById("item-input")
-    const todoAddForm = document.getElementById("todo-add")
-    const ul = document.getElementById("todo-list")
-    const lis = ul.getElementsByTagName("li")
+    
 
 
     function generateLiTask(obj) {
@@ -62,7 +62,7 @@ function init(arrTasks){
         checkButton.setAttribute("data-action", "checkButton")
 
         li.appendChild(checkButton)
-
+        console.log(obj)
         p.className = "task-name"
         p.textContent = obj.getTitle()
         li.appendChild(p)
@@ -170,16 +170,6 @@ function init(arrTasks){
             actions[dataAction]()
         }
     }
-
-    todoAddForm.addEventListener("submit", function (e) {
-        e.preventDefault()
-        console.log(itemInput.value)
-        addTask(itemInput.value)
-
-        itemInput.value = ""
-        itemInput.focus()
-    });
-
     ul.addEventListener("click", clickedUl)
 
     renderTasks() 
