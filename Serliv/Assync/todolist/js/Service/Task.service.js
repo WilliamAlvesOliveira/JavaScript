@@ -13,8 +13,10 @@ export default class TaskService{
         }
     
         const fn = (task) => {
-            this.tasks.push(new Task(task))
-            if(typeof cb === 'function')cb()
+            const {title, completed, createdAt, updatedAt} = task
+            //this.tasks.push(new Task(title, completed, createdAt, updatedAt))
+            this.getTask(userId, cb)
+            //if(typeof cb === 'function')cb()
         }
 
         createXMLHttpRequest('POST', `${urlUsers}/tasks?userId=${userId}`, fn, JSON.stringify(task))
@@ -22,13 +24,21 @@ export default class TaskService{
 
     getTask(userId,callback){
         const fn = (arrTasks) => {
-            console.log(arrTasks)
             this.tasks = arrTasks.map(task => {
-                const { title, completed, createdAt, updatedAt } = task
-                return new Task(title, completed, createdAt, updatedAt)
+                const { title, completed, createdAt, updatedAt, id } = task
+                return new Task(title, completed, createdAt, updatedAt, id)
             })
-            callback(this.tasks)
+
+            if(typeof callback === 'function') callback(this.tasks)
         }
         createXMLHttpRequest('GET', `${urlUsers}/tasks?userId=${userId}`, fn)
+    }
+
+    remove(id, userId, cb){
+        const fn = () => {
+            this.getTask(userId, cb)
+        }
+
+        createXMLHttpRequest('DELETE', `${urlUsers}/tasks/${id}`, fn)
     }
 }

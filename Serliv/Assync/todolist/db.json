@@ -9,44 +9,10 @@
       "id": "1"
     },
     {
-      "title": "segunda tarefa",
+      "id": "cbbc",
+      "title": "terceira tarefa",
       "completed": false,
-      "createAt": "",
-      "updatedAt": "",
-      "userId": 1,
-      "id": "2"
-    },
-    {
-      "title": "tereceira tarefa",
-      "completed": false,
-      "createAt": "",
-      "updatedAt": "",
-      "userId": 1,
-      "id": "3"
-    },
-    {
-      "id": "4",
-      "title": "quarta tarefa",
-      "userId": 1
-    },
-    {
-      "id": "5",
-      "title": "teste json",
-      "userId": 1
-    },
-    {
-      "id": "6",
-      "title": "quinta tarefa",
-      "completed": false,
-      "createAt": "",
-      "updatedAt": "",
-      "userId": 1
-    },
-    {
-      "id": "b520",
-      "title": "vzxcvzx",
-      "completed": false,
-      "createdAt": 1751384952730,
+      "createdAt": 1751460323271,
       "updatedAt": null
     }
   ],

@@ -12,19 +12,20 @@ const UrlTask = 'http://localhost:3000/tasks'
 const userId = 1
 
 const taskService = new TaskService()
-const tasksView = new TasksView()
+
+const ul = document.getElementById("todo-list")
+
+const tasksView = new TasksView(ul)
 const taskController = new TasksController(taskService, tasksView)
 
 const itemInput = document.getElementById("item-input")
 const todoAddForm = document.getElementById("todo-add")
-const ul = document.getElementById("todo-list")
 const lis = ul.getElementsByTagName("li")
 
 taskService.getTask(userId, init)
 
 todoAddForm.addEventListener("submit", function (e) {
     e.preventDefault()
-    console.log(itemInput.value)
     taskController.add(itemInput.value, userId)
 
     itemInput.value = ""
@@ -32,94 +33,10 @@ todoAddForm.addEventListener("submit", function (e) {
 });
 
 function init(arrInstancesTasks){
-     // a partir de um array de objetos literais, crie um array contendo instancias de Tasks. 
-    // Essa array deve chamar arrInstancesTasks
+
     if(arrInstancesTasks.error) return
-    console.log('=======')
-    console.log(arrInstancesTasks)
-    // const arrInstancesTasks = arrTasks.map(task => {
-    //     const { title, completed, createdAt, updatedAt } = task
-    //     return new Task(title, completed, createdAt, updatedAt)
-    // })
-    
-    //ARMAZENAR O DOM EM VARIAVEIS
-    
 
-
-    function generateLiTask(obj) {
-
-        const li = document.createElement("li")
-        const p = document.createElement("p")
-        const checkButton = document.createElement("button")
-        const editButton = document.createElement("i")
-        const deleteButton = document.createElement("i")
-
-        li.className = "todo-item"
-
-        checkButton.className = "button-check"
-        checkButton.innerHTML = `
-            <i class="fas fa-check ${obj.completed ? "" : "displayNone"}" data-action="checkButton"></i>`
-        checkButton.setAttribute("data-action", "checkButton")
-
-        li.appendChild(checkButton)
-        console.log(obj)
-        p.className = "task-name"
-        p.textContent = obj.getTitle()
-        li.appendChild(p)
-
-        editButton.className = "fas fa-edit"
-        editButton.setAttribute("data-action", "editButton")
-        li.appendChild(editButton)
-
-
-        const containerEdit = document.createElement("div")
-        containerEdit.className = "editContainer"
-        const inputEdit = document.createElement("input")
-        inputEdit.setAttribute("type", "text")
-        inputEdit.className = "editInput"
-        inputEdit.value = obj.getTitle()
-
-        containerEdit.appendChild(inputEdit)
-        const containerEditButton = document.createElement("button")
-        containerEditButton.className = "editButton"
-        containerEditButton.textContent = "Edit"
-        containerEditButton.setAttribute("data-action", "containerEditButton")
-        containerEdit.appendChild(containerEditButton)
-        const containerCancelButton = document.createElement("button")
-        containerCancelButton.className = "cancelButton"
-        containerCancelButton.textContent = "Cancel"
-        containerCancelButton.setAttribute("data-action", "containerCancelButton")
-        containerEdit.appendChild(containerCancelButton)
-
-        li.appendChild(containerEdit)
-
-
-
-        deleteButton.className = "fas fa-trash-alt"
-        deleteButton.setAttribute("data-action", "deleteButton")
-        li.appendChild(deleteButton)
-
-        return li
-    }
-
-    function renderTasks() {
-        ul.innerHTML = ""
-        arrInstancesTasks.forEach(taskObj => {
-            ul.appendChild(generateLiTask(taskObj))
-        });
-    }
-
-    function addTask(taskName) {
-        // adicione uma nova instancia de Task
-        const cb = function({title}){
-            arrInstancesTasks.push(new Task(title))
-            renderTasks()
-        }
- 
-        const taskString =JSON.stringify({title : taskName, userId})
-
-        createXMLHttpRequest('POST', UrlTask, cb, taskString)
-    }
+    tasksView.render(taskService.tasks)
 
     function clickedUl(e) {
         const dataAction = e.target.getAttribute("data-action")
@@ -145,13 +62,11 @@ function init(arrInstancesTasks){
 
             },
             deleteButton: function () {
-                arrInstancesTasks.splice(currentLiIndex, 1)
-                renderTasks()
-
+                taskController.remove(currentLi.getAttribute('data-id'), userId)
             },
             containerEditButton: function () {
                 const val = currentLi.querySelector(".editInput").value
-                arrInstancesTasks[currentLiIndex].setName(val)
+                arrInstancesTasks[currentLiIndex].setTitle(val)
                 renderTasks()
             },
             containerCancelButton: function () {
@@ -171,7 +86,5 @@ function init(arrInstancesTasks){
         }
     }
     ul.addEventListener("click", clickedUl)
-
-    renderTasks() 
  }
    

@@ -7,10 +7,11 @@ export default class TasksController{
     }
 
     add(title, userId){
-        this.service.add(new Task(title), () => {
-            this.view.render()
-        },userId)
+        this.service.add(new Task(title), () => this.view.render(this.service.tasks),userId)
         //this.service.tasks
-        
+    }
+
+    remove(id, userId){
+        this.service.remove(id, userId, () => this.view.render(this.service.tasks),id)
     }
 }
