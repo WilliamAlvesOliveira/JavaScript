@@ -41,4 +41,16 @@ export default class TaskService{
 
         createXMLHttpRequest('DELETE', `${urlUsers}/tasks/${id}`, fn)
     }
+
+    update(task, userId, cb){
+        const fn = () => {
+            this.getTask(userId, cb)
+        }
+
+        createXMLHttpRequest('PATCH',`${urlUsers}/tasks/${task.id}`,  fn, JSON.stringify(task))
+    }
+
+    getById(id){
+        return this.tasks.find(task => task.id === id)
+    }
 }

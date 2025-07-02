@@ -20,7 +20,7 @@ export function Task(title, completed, createdAt, updatedAt, id) {
         this.toggleDone = function () {
             this.completed = !this.completed
         }
-        this.id = id || null
+        this.id = id
         this.getTitle = () => _title
         this.setTitle = function (newTitle) {
             _title = newTitle

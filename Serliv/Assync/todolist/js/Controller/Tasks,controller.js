@@ -12,6 +12,18 @@ export default class TasksController{
     }
 
     remove(id, userId){
-        this.service.remove(id, userId, () => this.view.render(this.service.tasks),id)
+        this.service.remove(id, userId, () => this.view.render(this.service.tasks))
+    }
+
+    update(task, userId){
+        task.updatedAt = Date.now() 
+        this.service.update(task, userId, () => this.view.render(this.service.tasks))
+    }
+
+    toggleDone(id, userId){
+        const task = this.service.getById(id)
+        const { completed } = task
+
+        this.update({completed: !completed, id}, userId)
     }
 }

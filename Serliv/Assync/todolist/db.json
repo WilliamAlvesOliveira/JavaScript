@@ -1,19 +1,33 @@
 {
   "tasks": [
     {
-      "title": "primeira tarefa modificada com o patch",
-      "completed": false,
+      "title": "primeira tarefa 1",
+      "completed": true,
       "createAt": "",
-      "updatedAt": "",
+      "updatedAt": 1751469821573,
       "userId": 1,
       "id": "1"
     },
     {
-      "id": "cbbc",
+      "id": "2",
+      "title": "segunda tarefa",
+      "completed": false,
+      "createdAt": 1751464587055,
+      "updatedAt": null
+    },
+    {
+      "id": "3",
       "title": "terceira tarefa",
       "completed": false,
-      "createdAt": 1751460323271,
+      "createdAt": 1751464890394,
       "updatedAt": null
+    },
+    {
+      "id": "06f7",
+      "title": "quarta tarefa updated",
+      "completed": false,
+      "createdAt": 1751465385004,
+      "updatedAt": 1751469861239
     }
   ],
   "users": [
