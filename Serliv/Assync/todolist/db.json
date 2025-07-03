@@ -1,10 +1,10 @@
 {
   "tasks": [
     {
-      "title": "primeira tarefa 1",
-      "completed": true,
+      "title": "primeira tarefa",
+      "completed": false,
       "createAt": "",
-      "updatedAt": 1751469821573,
+      "updatedAt": 1751548130290,
       "userId": 1,
       "id": "1"
     },
@@ -13,7 +13,7 @@
       "title": "segunda tarefa",
       "completed": false,
       "createdAt": 1751464587055,
-      "updatedAt": null
+      "updatedAt": 1751544633121
     },
     {
       "id": "3",
@@ -21,13 +21,6 @@
       "completed": false,
       "createdAt": 1751464890394,
       "updatedAt": null
-    },
-    {
-      "id": "06f7",
-      "title": "quarta tarefa updated",
-      "completed": false,
-      "createdAt": 1751465385004,
-      "updatedAt": 1751469861239
     }
   ],
   "users": [

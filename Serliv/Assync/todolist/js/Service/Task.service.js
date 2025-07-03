@@ -1,4 +1,4 @@
-const urlUsers = 'http://localhost:3000'
+import {urlUsers, urlTasks} from '../config.js'
 import  {createXMLHttpRequest} from '../createXMLHttpRequest.js'
 import {Task} from '../Model/todoTask.model.js'
 
@@ -7,47 +7,42 @@ export default class TaskService{
         this.tasks = []
     }
     
-    add(task, cb, userId){
-        if(!task instanceof Task){
-            throw TypeError("Task must be instance of Tasks")
-        }
-    
+    add(task, cb, error,  userId){
         const fn = (task) => {
             const {title, completed, createdAt, updatedAt} = task
-            //this.tasks.push(new Task(title, completed, createdAt, updatedAt))
             this.getTask(userId, cb)
-            //if(typeof cb === 'function')cb()
         }
 
-        createXMLHttpRequest('POST', `${urlUsers}/tasks?userId=${userId}`, fn, JSON.stringify(task))
+        createXMLHttpRequest('POST', `${urlUsers}${userId}`, fn, error, JSON.stringify(task))
     }
 
-    getTask(userId,callback){
+    getTask(userId,sucess, error){
         const fn = (arrTasks) => {
             this.tasks = arrTasks.map(task => {
                 const { title, completed, createdAt, updatedAt, id } = task
                 return new Task(title, completed, createdAt, updatedAt, id)
             })
 
-            if(typeof callback === 'function') callback(this.tasks)
+            if(typeof sucess === 'function') sucess(this.tasks)
         }
-        createXMLHttpRequest('GET', `${urlUsers}/tasks?userId=${userId}`, fn)
+        createXMLHttpRequest('GET', `${urlUsers}${userId}`, fn, error)
     }
 
-    remove(id, userId, cb){
+    remove(id, userId, cb, error){
         const fn = () => {
             this.getTask(userId, cb)
         }
 
-        createXMLHttpRequest('DELETE', `${urlUsers}/tasks/${id}`, fn)
+        createXMLHttpRequest('DELETE', `${urlTasks}${id}`, fn, error)
     }
 
-    update(task, userId, cb){
+    update(task, userId, cb, error){
+        task.updatedAt = Date.now()
         const fn = () => {
             this.getTask(userId, cb)
         }
 
-        createXMLHttpRequest('PATCH',`${urlUsers}/tasks/${task.id}`,  fn, JSON.stringify(task))
+        createXMLHttpRequest('PATCH',`${urlTasks}${task.id}`,  fn, error, JSON.stringify(task))
     }
 
     getById(id){
