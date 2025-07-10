@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const regEx = /^\d{5}-?\d{3}$/
+
+        cep = '12345-123'
+        cep2 = '12345123'
+        cep3 = '12345-1234'
+        cep4 = '123456-123'
+        cep5 = '12345-12345'
+
+        function isValidCep(cep){
+            return regEx.test(cep)
+        }
+
+        console.log(isValidCep(cep))
+        console.log(isValidCep(cep2))
+        console.log(isValidCep(cep3))
+        console.log(isValidCep(cep4))
+        console.log(isValidCep(cep5))
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+    <!DOCTYPE html>
+    <html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Email ou CEP</title>
+    </head>
+    <body>
+        <p>informe o e-mail ou CPF</p>
+        <input type="text" id="resposta">
+        <button id="btn" disabled>ok</button>
+
+        <script>
+            const input = document.querySelector('#resposta')
+            input.addEventListener('input', checkresponse);
+
+            function checkresponse(e){
+                resposta = e.target.value
+                const button = document.querySelector('#btn')
+                const validEmail = /^[\w.-]+@([\w-]+\.){1,2}[\w-]{2,}$/i 
+                const validCPF = /^\d{3}.?\d{3}.?\d{3}-?[\d]{2}$/
+
+                button.disabled = !(validEmail.test(resposta) || validCPF.test(resposta))
+            }
+
+        </script>
+    </body>
+    </html>
