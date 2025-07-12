@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Extração de parâmetros de URL</title>
+</head>
+
+<body>
+
+  <script>
+    // URL com parâmetros (como ao fazer uma busca no Google)
+    let url = 'https://www.google.com/search?q=ramones&sca_esv=5a4b1ba8a892269d&sxsrf=AE3TifMGyOM8lOB-mn2G5IlSUGXHz4f6qg%3A1752243481944&source=hp&ei=GR1xaIWWN96J1sQPufqLwAM&iflsig=AOw8s4IAAAAAaHErKYYgYuojLeAqWlE_fkNd9ScdxnFJ&ved=0ahUKEwjFhrLS_7SOAxXehJUCHTn9AjgQ4dUDCBc&uact=5&oq=ramones&gs_lp=Egdnd3Mtd2l6IgdyYW1vbmVzMggQLhiABBixAzIFEC4YgAQyBRAuGIAEMgUQABiABDIFEC4YgAQyBRAAGIAEMgUQLhiABDIFEAAYgAQyBRAAGIAEMgUQABiABEjyDVAAWKcHcAB4AJABAJgBsAGgAbsHqgEDMC43uAEDyAEA-AEBmAIHoALVB8ICChAjGIAEGCcYigXCAg4QLhiABBixAxiDARiKBcICCxAuGIAEGLEDGIMBwgIIEAAYgAQYsQPCAg4QLhiABBixAxjRAxjHAcICCxAAGIAEGLEDGIMBwgIOEAAYgAQYsQMYgwEYigWYAwCSBwMwLjegB_FxsgcDMC43uAfVB8IHBTAuNi4xyAcU&sclient=gws-wiz';
+
+    // Regex para capturar cada par de parâmetro da URL no formato chave=valor
+    const regEx = /[?&](\w+)=([\w%-]+)/g;
+    /*
+    Explicação:
+    - [\?&] → começa com ? (para o primeiro parâmetro) ou & (para os seguintes)
+    - (\w+) → grupo 1: nome do parâmetro (composto de letras, números e "_")
+    - =     → sinal de igualdade entre chave e valor
+    - ([\w%-]+) → grupo 2: valor do parâmetro (letras, números, %, hífen)
+
+    Obs: o "+" significa "1 ou mais ocorrências".
+    */
+
+    let arr;         // variável temporária que armazenará cada resultado do .exec()
+    const obj = {};  // objeto final onde serão armazenados os pares chave-valor
+
+    // Loop que continua até a regex não encontrar mais correspondências
+    while (arr = regEx.exec(url)) {
+      // arr[1] é o nome do parâmetro, arr[2] é o valor
+      obj[arr[1]] = arr[2];
+    }
+
+    console.log(obj);
+    /*
+    Saída esperada (objeto com os parâmetros extraídos):
+    {
+      q: "ramones",
+      sca_esv: "5a4b1ba8a892269d",
+      sxsrf: "AE3TifMGyOM8lOB-mn2G5IlSUGXHz4f6qg%3A1752243481944",
+      source: "hp",
+      ei: "GR1xaIWWN96J1sQPufqLwAM",
+      iflsig: "AOw8s4IAAAAAaHErKYYgYuojLeAqWlE_fkNd9ScdxnFJ",
+      ved: "0ahUKEwjFhrLS_7SOAxXehJUCHTn9AjgQ4dUDCBc",
+      uact: "5",
+      oq: "ramones",
+      gs_lp: "Egdnd3Mtd2l6IgdyYW1vbmVzMggQLhiABBixAzIFEC4YgAQyBRAuGIAEMgUQABiABDIFEC4YgAQyBRAAGIAEMgUQLhiABDIFEAAYgAQyBRAAGIAEMgUQABiABEjyDVAAWKcHcAB4AJABAJgBsAGgAbsHqgEDMC43uAEDyAEA-AEBmAIHoALVB8ICChAjGIAEGCcYigXCAg4QLhiABBixAxiDARiKBcICCxAuGIAEGLEDGIMBwgIIEAAYgAQYsQPCAg4QLhiABBixAxjRAxjHAcICCxAAGIAEGLEDGIMBwgIOEAAYgAQYsQMYgwEYigWYAwCSBwMwLjegB_FxsgcDMC43uAfVB8IHBTAuNi4xyAcU",
+      sclient: "gws-wiz"
+    }
+    */
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Regex com exec</title>
+</head>
+
+<body>
+
+  <script>
+    // Texto que contém 3 datas diferentes no formato dd/mm/aaaa ou d/m/aa
+    let str = 'hoje é 26/02/2018 e amanha será 27/02/18. Meu aniversario é 1/21.';
+
+    // Regex SEM a flag 'g' → captura apenas a **primeira ocorrência**
+    const regEx = /(\d{1,2})\/(\d{1,2})(?:\/(\d{2,4}))?/;
+
+    // Regex COM a flag 'g' → pode capturar **várias ocorrências**, uma por vez, mantendo estado interno via lastIndex
+    const dateRegEx = /(\d{1,2})\/(\d{1,2})(?:\/(\d{2,4}))?/g;
+
+    // ==============================
+    // .exec() com regex SEM /g
+    // ==============================
+
+    console.log(regEx.exec(str));
+    /*
+    Resultado:
+    [
+      '26/02/2018',  // match completo
+      '26',          // grupo 1 (dia)
+      '02',          // grupo 2 (mês)
+      '2018',        // grupo 3 (ano)
+      index: 8,      // posição do match na string
+      input: 'hoje é 26/02/2018 e amanha será 27/02/18. Meu aniversario é 1/21.',
+      groups: undefined
+    ]
+    */
+
+    // A regex sem /g sempre começa do início da string e retorna apenas o primeiro match.
+
+    // ==============================
+    // .exec() com regex COM /g
+    // ==============================
+
+    console.log(dateRegEx.exec(str)); // Primeira chamada → pega "26/02/2018"
+    console.log(dateRegEx.exec(str)); // Segunda chamada → pega "27/02/18"
+    console.log(dateRegEx.exec(str)); // Terceira chamada → pega "1/21"
+    console.log(dateRegEx.exec(str)); // Quarta chamada → null (não há mais datas)
+
+    /*
+    Detalhe importante:
+    Ao usar `.exec()` com regex global (`/g`), o motor da regex avança automaticamente a cada chamada,
+    guardando a posição através da propriedade interna `lastIndex`.
+
+    Cada chamada pega o próximo match. Quando não há mais, retorna `null`.
+
+    Exemplo do fluxo interno (simplificado):
+    - 1ª chamada: lastIndex = 0 → match = "26/02/2018"
+    - 2ª chamada: lastIndex = 28 → match = "27/02/18"
+    - 3ª chamada: lastIndex = 48 → match = "1/21"
+    - 4ª chamada: lastIndex = 52 → null
+    */
+
+  </script>
+
+</body>
+
+</html>

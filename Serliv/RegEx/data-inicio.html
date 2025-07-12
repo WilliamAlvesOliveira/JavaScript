@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Regex e Datas</title>
+</head>
+
+<body>
+
+  <script>
+    // Texto de entrada com várias datas
+    let str = 'hoje é 26/02/2018 e amanha será 27/02/18. Meu aniversario é 1/21.';
+
+    // Array com os nomes dos meses para converter número em nome
+    const meses = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
+
+    // Regex inválida (sem sentido, usada aqui para demonstrar falha no .search)
+    const wrongRegEx = /asdfgh/;
+
+    // Regex para encontrar **uma única data** (sem o modificador `g` de global)
+    const regEx = /(\d{1,2})\/(\d{1,2})(?:\/(\d{2,4}))?/;
+
+    // Regex para encontrar **todas as datas** (com `g` para global)
+    const dateRegEx = /(\d{1,2})\/(\d{1,2})(?:\/(\d{2,4}))?/g;
+
+    // ===============================================
+    // .replace com regex e função de callback
+    // ===============================================
+
+    const newStr = str.replace(dateRegEx, function(match, dia, mes, ano, offset, originalString) {
+      // Verifica se o mês está entre 1 e 12. Se não estiver, retorna o texto original sem alterar.
+      if (mes < 1 || mes > 12) return match;
+
+      // Se o ano for de dois dígitos, converte para quatro dígitos (assumindo século 21)
+      if (ano && ano.length === 2) ano = '20' + ano;
+
+      // Monta a nova data formatada no estilo "25 de jan do ano de 2024"
+      return `${dia} de ${meses[parseInt(mes) - 1]}${ano ? ' do ano de ' + ano : ''}`;
+    });
+
+    console.log(newStr);
+    // Saída esperada:
+    // "hoje é 26 de fev do ano de 2018 e amanha será 27 de fev do ano de 2018. Meu aniversario é 1/21."
+
+    // ===============================================
+    // .search → retorna a posição da primeira ocorrência da regex
+    // ===============================================
+    console.log(str.search(regEx));       // Posição da 1ª data (match único)
+    console.log(str.search(regEx));       // Mesmo resultado da linha acima (diferente do test)
+    console.log(str.search(dateRegEx));   // Também encontra a 1ª data (regex global funciona igual ao regEx aqui)
+    console.log(str.search(dateRegEx));   // Idem
+    console.log(str.search(wrongRegEx));  // Retorna -1, pois não encontra a string "asdfgh"
+
+    // ===============================================
+    // .match → retorna as correspondências com a regex
+    // ===============================================
+
+    console.log(str.match(regEx));
+    // Retorna um array com:
+    // [0] = string completa casada ("26/02/2018")
+    // [1] = dia ("26")
+    // [2] = mês ("02")
+    // [3] = ano ("2018")
+
+    console.log(str.match(regEx)); // Mesmo resultado acima
+
+    console.log(str.match(dateRegEx));
+    // Retorna **todas as datas encontradas** como strings simples:
+    // ["26/02/2018", "27/02/18", "1/21"]
+    // Obs: sem grupos, pois regex com flag `g` ignora grupos no `.match()` (usa só o match completo)
+
+  </script>
+
+</body>
+
+</html>
