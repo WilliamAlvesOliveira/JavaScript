@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Curso Javascript Completo</title>
+    <meta charset="utf-8">
+
+    <style>
+        .hgt {
+            font-weight: normal;
+            color: white;
+            background-color: rgb(99, 0, 0);
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Curso Javascript Completo</h1>
+
+    <!-- Campo de texto para digitar a palavra a ser destacada -->
+    <input type="text" placeholder="Digite para destacar...">
+
+    <!-- Parágrafos com conteúdo de exemplo -->
+    <p>1 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        quis nostrud <strong>exercitation ullamco laboris</strong> nisi ut aliquip ex ea commodo
+        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+    <p>2 Lorem ipsum, dolor sit amet consectetur adipisicing elit. Omnis quis qui, numquam eius porro corrupti laborum
+        delectus perspiciatis repudiandae ullam.</p>
+
+    <p>3 Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis, quas?</p>
+
+    <script>
+        // ================================
+        // 1. Capturar os elementos do DOM
+        // ================================
+
+        // Seleciona todos os parágrafos da página
+        const paragraphs = document.querySelectorAll('p');
+
+        // Salva o conteúdo HTML original de cada parágrafo (inclusive tags como <strong>)
+        const originalParagraphs = Array.from(paragraphs).map(p => p.innerHTML);
+
+        // =====================================
+        // 2. Adicionar o evento ao campo input
+        // =====================================
+
+        // Escuta o evento de digitação (input) no campo de texto
+        document.querySelector('input').addEventListener('input', e => {
+            // Captura e remove espaços extras do valor digitado
+            const valor = e.target.value.trim();
+
+            // ====================================================
+            // 3. Manipular o conteúdo dos parágrafos com destaque
+            // ====================================================
+
+            // Para cada parágrafo...
+            paragraphs.forEach((paragraph, i) => {
+                // Recupera o HTML original salvo anteriormente
+                const paragraphHtml = originalParagraphs[i];
+
+                // Se houver algum texto digitado...
+                if (valor) {
+                    // Cria uma expressão regular para encontrar o texto (ignorando maiúsculas/minúsculas)
+                    const regex = new RegExp(valor, 'gi');
+
+                    // Substitui as ocorrências encontradas por uma versão com a tag <span> e classe de destaque
+                    const htmlReplaced = paragraphHtml.replace(regex, result => {
+                        return `<span class="hgt">${result}</span>`;
+                    });
+
+                    // Atualiza o conteúdo do parágrafo com o novo HTML (com destaque)
+                    paragraph.innerHTML = htmlReplaced;
+                } else {
+                    // Se não houver texto, restaura o HTML original do parágrafo
+                    paragraph.innerHTML = paragraphHtml;
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
