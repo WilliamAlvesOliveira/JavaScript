@@ -1,0 +1,1 @@
+export const teste = 'exportando outro teste'
