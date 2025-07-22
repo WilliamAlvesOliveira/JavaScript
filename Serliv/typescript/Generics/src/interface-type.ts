@@ -91,3 +91,48 @@ addAction({
     id: 123         // Campo extra (permitido)
 })
 
+//=============================================
+//* BLOCO: ADD COM RESTRIÇÃO E TRANSFORMAÇÃO DE DADOS
+//=============================================
+
+//* EXPLICAÇÃO:
+//
+// Esta versão da função `addAction2` impõe uma restrição mais específica:
+// - O objeto deve ter os campos definidos em `Action2`
+// - E também deve obrigatoriamente ter um campo `id` do tipo `number`
+//
+// Além de registrar a ação no histórico, a função também transforma o objeto:
+// - Ela gera um campo adicional chamado `_id`, construído a partir de `id` e `timestamp`
+// - O novo objeto é criado com spread operator (`...obj`) e o novo campo é anexado antes de ser salvo
+//
+// Essa abordagem é útil quando precisamos **enriquecer os dados** antes de armazenar ou processar.
+
+
+// Função genérica com restrição combinada:
+// - T deve estender Action2 (action: string, timestamp: number)
+// - E também ter obrigatoriamente { id: number }
+const addAction2 = <T extends Action2 & { id: number }>(obj: T) => {
+    console.log('addAction')
+    console.log(obj)
+
+    // Criamos um novo objeto contendo tudo que já existia em `obj`
+    // E adicionamos um novo campo `_id` que combina `id` e `timestamp`
+    const result = {
+        ...obj,
+        _id: obj.id + '_' + obj.timestamp // Ex: "123_12345"
+    }
+
+    // Adicionamos o novo objeto no histórico
+    historyActions.push(result)
+}
+
+// Chamando a função com um objeto válido:
+// - Contém todos os campos exigidos por Action2
+// - Inclui o campo extra `id` (obrigatório)
+// - Pode ter outros campos extras como `teste` (permitido)
+addAction2({
+    action: 'delete',
+    timestamp: 12345,
+    teste: 'teste', // Extra permitido
+    id: 123         // Obrigatório por causa da restrição
+})
