@@ -1,4 +1,4 @@
-
+ 
 # Rodando TypeScript no Terminal com Node.js
 
 Este guia te mostra como configurar e rodar projetos TypeScript diretamente pelo terminal. Inclui também algumas alternativas modernas para acelerar o desenvolvimento.
