@@ -1,6 +1,7 @@
 // Importa o estilo SCSS para ser aplicado à página
 import '../styles/estilo.scss'
 import { PubSub } from './pubsub'
+import type { Output } from './pubsub'
 
 // Seleciona os elementos do DOM com os IDs indicados e faz type assertion para HTMLElement
 const testeEvent1 = document.querySelector('#testEvent') as HTMLElement
@@ -60,27 +61,47 @@ document.addEventListener('click', eventFire)
                   PUB/SUB DESIGN PATTERN
 =========================================================*/
 
+// Seleciona o elemento do DOM que exibirá os dados do evento publicado
 const pubsub = document.getElementById('pubSub') as HTMLElement
 
-function teste(){
-  console.log('teste')
+// Função que será chamada como callback quando um evento for publicado
+function teste(data?: Output){
+  console.log('teste')     // Log simples indicando que a função foi chamada
+  console.log(data)        // Mostra os dados recebidos na publicação
 }
 
-// PubSub.subscribe('eventTeste', function(data: any){
-//   console.log('teste chamado')
-//   console.log(data)
-// })// fuções anonimas não podem ser removidas
+// Inscreve a função `teste` no evento 'eventTeste1'
+// Essa função será chamada toda vez que 'eventTeste1' for publicado
+PubSub.subscribe('eventTeste1', teste)
 
-// PubSub.subscribe('eventTeste1',teste)
-PubSub.subscribe('eventTeste1',teste)
-PubSub.subscribe('eventTeste2',teste)
-PubSub.subscribe('eventTeste3',teste)
+// Inscreve novamente a função `teste`, mas agora no evento 'eventTeste2'
+PubSub.subscribe('eventTeste2', teste)
 
+// Inscreve uma função anônima para escutar o evento 'eventTeste3'
+// Essa função anônima atualiza o conteúdo da `<div id="pubSub">` com os dados recebidos
+PubSub.subscribe('eventTeste3', data => {
+  console.log(data?.data, data?.type)
+  pubsub.textContent = `Data: ${data?.data} - type: ${data?.type}`
+})
 
-PubSub.unsubscriber('eventTeste2', teste)// remove a primeira ocorrencia
+// Remove a função `teste` associada ao evento 'eventTeste1'
+// Isso significa que, se 'eventTeste1' for publicado agora, nada acontecerá
+// Importante: apenas funções nomeadas podem ser removidas — funções anônimas não podem
+PubSub.unsubscriber('eventTeste1', teste)
 
-
+// Exibe no console todos os eventos registrados e suas respectivas funções
 console.log(PubSub.subscribers)
 
+// Após 3 segundos, publica o evento 'eventTeste3' com uma string como dado
+// Isso irá acionar a função anônima inscrita anteriormente e atualizar o conteúdo da div
+setTimeout(() => {
+  PubSub.publish('eventTeste3', 'publish com timeout')
+}, 3000)
+
+// Publica o evento 'eventTeste' com o dado 20
+// Como nenhuma função está inscrita nesse evento atualmente, nada acontece
 PubSub.publish('eventTeste', 20)
+
+// Publica o evento 'eventTeste' novamente, agora com uma string
+// Ainda assim, nenhum callback foi registrado para esse evento, então nada é executado
 PubSub.publish('eventTeste', 'Olá, Mundo do pub/sub')
