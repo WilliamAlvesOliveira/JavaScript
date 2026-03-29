@@ -1,4 +1,4 @@
-var pais = 'BraSil'
+const pais = 'BraSil'
 
 if(pais.toUpperCase() == 'BRASIL'){
     console.log('Você é brasileiro!')

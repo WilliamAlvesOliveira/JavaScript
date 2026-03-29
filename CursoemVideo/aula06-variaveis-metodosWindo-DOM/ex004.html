@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Primeiros passos com métodos</title>
 </head>
 <body>
     <script>
-        var nome = prompt('Qual é o seu nome')
+        let nome = prompt('Qual é o seu nome')
         document.write(`<h1>Olá ${nome}</h1> <p>O seu nome tem ${nome.length} letras</p><br>`)
-        document.writeln(`O seu nome em maiusculas é ${nome.toUpperCase()}`)
-        document.writeln(`o seu nome em minusculas é ${nome.toLocaleLowerCase()}`)
+        document.writeln(`<p>O seu nome em maiusculas é ${nome.toUpperCase()}</p>`)
+        document.writeln(`<p>o seu nome em minusculas é ${nome.toLocaleLowerCase()}</p>`)
 
     </script>
     

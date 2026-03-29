@@ -18,8 +18,8 @@
     </div>
     <script>
         function verificar(){
-            var nac = document.querySelector('input#nacionalidade').value
-            var res = document.getElementById('resultado')
+            const nac = document.querySelector('input#nacionalidade').value
+            const res = document.getElementById('resultado')
             res.innerHTML = `Você nasceu no ${nac.toUpperCase()}<br>`
             if (nac.toUpperCase() == 'BRASIL'){
                 res.innerHTML += 'Você é brasileiro'
